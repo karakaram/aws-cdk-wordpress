@@ -250,6 +250,7 @@ Download wordpress
 mkdir -p /var/www
 wp core download --locale=ja --path=/var/www/wordpress
 rm -f /var/www/wordpress/wp-config-sample.php
+rm -f /var/www/wordpress/readme.html
 wp config create --path=/var/www/wordpress --dbname=wordpress --dbuser=supervisor --dbpass=strongpassword --dbhost=host --dbprefix=wp_ --dbcharset=utf8mb4 --dbcollate=utf8mb4_ja_0900_as_cs_ks --extra-php <<'EOS'
 define('DISABLE_WP_CRON', true);
 define('WP_POST_REVISIONS', false);
