@@ -235,6 +235,30 @@ systemctl enable nginx
 grubby --default-kernel | grep `uname -r` || (sleep 10; reboot)&
 ```
 
+## Install MySQL Server
+
+https://dev.mysql.com/doc/refman/8.0/en/linux-installation-yum-repo.html
+
+```
+curl -fsLO https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
+yum install mysql80-community-release-el7-3.noarch.rpm
+yum-config-manager --disable mysql57-community
+yum-config-manager --enable mysql80-community
+yum repolist enabled | grep mysql
+yum module disable mysql
+yum install mysql-community-server
+
+systemctl start mysqld
+systemctl enable mysqld
+
+grep 'temporary password' /var/log/mysqld.log
+
+mysql -uroot -p
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyNewPass4!';
+CREATE USER 'monty'@'localhost' IDENTIFIED BY 'some_pass';
+GRANT ALL PRIVILEGES ON *.* TO 'monty'@'localhost' WITH GRANT OPTION;
+```
+
 ## Setup wordpress
 
 Download wp-cli
