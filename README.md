@@ -297,7 +297,6 @@ wp db create --path=/var/www/wordpress
 wp core install --path=/var/www/wordpress --url=https://www.xample.com --title=Example --admin_user=supervisor --admin_password=strongpassword --admin_email=info@example.com
 wp plugin install advanced-database-cleaner --activate --path=/var/www/wordpress
 wp plugin install amazonjs --activate --path=/var/www/wordpress
-wp plugin install amazon-associates-link-builder --path=/var/www/wordpress
 wp plugin install better-search-replace --activate --path=/var/www/wordpress
 wp plugin install classic-editor --activate --path=/var/www/wordpress
 wp plugin install disable-comments --activate --path=/var/www/wordpress
