@@ -1,6 +1,14 @@
 # ec2-wordpress
 
-## User data
+## EFS
+
+1. [Creating an Amazon Elastic File System \- Amazon Elastic File System](https://docs.aws.amazon.com/efs/latest/ug/creating-using-create-fs.html)
+2. [Creating Access Points \- Amazon Elastic File System](https://docs.aws.amazon.com/efs/latest/ug/create-access-point.html)
+3. [Creating Security Groups \- Amazon Elastic File System](https://docs.aws.amazon.com/efs/latest/ug/accessing-fs-create-security-groups.html)
+
+## EC2
+
+User data
 
 ```
 #!/usr/bin/bash
@@ -103,7 +111,7 @@ server {
 
     charset UTF-8;
     client_max_body_size 16M;
-    root  /var/www/wordpress;
+    root  /var/www/html;
     index index.php index.html index.htm;
 
     location = /50x.html {
@@ -300,7 +308,30 @@ wp plugin install wp-mail-smtp --activate --path=/var/www/wordpress
 chown -R nginx:www /var/www
 find /var/www -type d | xargs chmod -R 775
 find /var/www -type f | xargs chmod -R 664
+```
 
+Mount EFS File Systems
+
+[Mounting EFS File Systems \- Amazon Elastic File System](https://docs.aws.amazon.com/efs/latest/ug/mounting-fs.html)
+
+```
+yum install -y amazon-efs-utils
+mkdir -p /var/www/html
+chown nginx:www /var/www/html
+mount -t efs -o tls,accesspoint=fsap-1234567890xxxxxxx fs-12345678 /var/www/html
+cp -a /var/www/wordpress/* /var/www/html
+rm -rf /var/www/wordpress
+```
+
+[Mounting Your Amazon EFS File System Automatically \- Amazon Elastic File System](https://docs.aws.amazon.com/efs/latest/ug/mount-fs-auto-mount-onreboot.html)
+
+```
+grep -q fs-12345678 /etc/fstab || echo 'fs-12345678 /var/www/html efs _netdev,tls,accesspoint=fsap-1234567890xxxxxxx 0 0' >> /etc/fstab
+```
+
+Configure log roaates
+
+```
 # log permission for nginx
 chmod 775 /var/log/nginx
 
@@ -317,7 +348,7 @@ logrotate -d /var/log/php-fpm
 
 # wp-cron
 cat << 'EOS' >/etc/cron.d/wp-cron
-0-59/15 * * * * nginx /usr/local/bin/wp cron event run --due-now --path=/var/www/wordpress >/dev/null 2>&1
+0-59/15 * * * * nginx /usr/local/bin/wp cron event run --due-now --path=/var/www/html >/dev/null 2>&1
 EOS
 ```
 
@@ -348,8 +379,8 @@ systemctl restart php-fpm
 Update
 
 ```
-wp option update home 'https://example.com' --path=/var/www/wordpress
-wp option update siteurl 'https://example.com' --path=/var/www/wordpress
+wp option update home 'https://example.com' --path=/var/www/html
+wp option update siteurl 'https://example.com' --path=/var/www/html
 ```
 
 ## CloudWatch Agent
