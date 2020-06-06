@@ -309,7 +309,7 @@ find /var/www -type d | xargs chmod -R 775
 find /var/www -type f | xargs chmod -R 664
 ```
 
-Mount EFS File Systems
+Mount EFS File Systems and 
 
 [Mounting EFS File Systems \- Amazon Elastic File System](https://docs.aws.amazon.com/efs/latest/ug/mounting-fs.html)
 
@@ -318,6 +318,11 @@ yum install -y amazon-efs-utils
 mkdir -p /var/www/html
 chown nginx:www /var/www/html
 mount -t efs -o tls,accesspoint=fsap-1234567890xxxxxxx fs-12345678 /var/www/html
+```
+
+Move wordpress files to EFS
+
+```
 cp -a /var/www/wordpress/* /var/www/html
 rm -rf /var/www/wordpress
 ```
