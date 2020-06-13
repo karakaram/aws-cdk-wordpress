@@ -255,16 +255,81 @@ yum-config-manager --enable mysql80-community
 yum repolist enabled | grep mysql
 yum module disable mysql
 yum install mysql-community-server
+```
 
+Configure my.cnf
+
+134217728*5/4 = DBInstanceClassMemory
+
+DBInstanceClassMemory=178257920(170MB)
+max_connections
+
+```
+cat << 'EOS' >>/etc/my.cnf
+
+character-set-server = utf8mb4
+collation-server = utf8mb4_ja_0900_as_cs_ks
+max_connections = 14
+innodb_buffer_pool_size = 134217728
+innodb_flush_method = O_DIRECT
+EOS
+```
+
+Variables (RDS MySQL8 t3.micro default)
+
+```
+t3.micro's DBInstanceClassMemory is 536870912 or 805304320
+show variables like 'max_connections'; {DBInstanceClassMemory/12582880} 64
+show variables like 'thread_cache_size'; default 8
+show variables like 'sort_buffer_size'; default 262144 256KB
+show variables like 'read_buffer_size'; 262144
+show variables like 'key_buffer_size'; 16777216 16MB
+show variables like 'innodb_buffer_pool_size'; {DBInstanceClassMemory*3/4} 402653184 384MB
+show variables like 'innodb_log_file_size'; 134217728 128MB
+show variables like 'innodb_file_per_table'; 1
+show variables like 'innodb_flush_log_at_trx_commit'; default 1
+show variables like 'innodb_flush_method'; O_DIRECT
+show variables like 'innodb_buffer_pool_instances'; default 1
+show variables like 'innodb_io_capacity'; default 200
+show variables like 'innodb_read_io_threads'; default 4
+show variables like 'innodb_write_io_threads'; default 4
+show variables like 'gtid_mode'; OFF_PERMISSIVE
+```
+
+Status
+
+```
+show status like 'Max_used_connections'; 12
+show status like 'Threads_created'; 24
+show status like 'Sort_merge_passes'; 0
+show engine innodb status;
+select event_name, count_star, sum_timer_wait/1000000000 sum_timer_wait_ms from performance_schema.events_waits_summary_global_by_event_name where event_name like '%buf_pool_mutex%';
+select * from sys.innodb_buffer_stats_by_schema;
+```
+
+Start MySQL
+
+```
 systemctl start mysqld
 systemctl enable mysqld
+```
 
+Initialize users
+
+```
 grep 'temporary password' /var/log/mysqld.log
 
 mysql -uroot -p
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyNewPass4!';
-CREATE USER 'monty'@'localhost' IDENTIFIED BY 'some_pass';
-GRANT ALL PRIVILEGES ON *.* TO 'monty'@'localhost' WITH GRANT OPTION;
+CREATE DATABASE wordpress;
+CREATE USER 'wordpress'@'localhost' IDENTIFIED BY 'MyNewPass4!';
+GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost' WITH GRANT OPTION;
+```
+
+Dump Database
+
+```
+mysqldump -umyuser -p --default-character-set=utf8mb4 --host=myhost --single-transaction --set-gtid-purged=OFF wordpress > wordpress.sql
 ```
 
 ## Setup wordpress
