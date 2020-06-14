@@ -229,7 +229,8 @@ sed -i -r -e 's/^;?request_terminate_timeout =.*.*$/request_terminate_timeout = 
 #sed -i -r -e 's/^;?listen =.*$/listen = 127.0.0.1:9000/g' /etc/php-fpm.d/www.conf
 #sed -i -r -e 's/unix:\/run\/php-fpm\/www.sock;/127.0.0.1:9000/g' /etc/nginx/conf.d/php-fpm.conf
 
-yum install php-bcmath php-pecl-imagick php-mbstring php-xml -y
+# php7.3
+yum install php-bcmath php-gd php-mbstring php-pecl-imagick php-xml -y
 
 yum install mysql -y
 
