@@ -25,8 +25,6 @@ gpasswd -a ec2-user www
 amazon-linux-extras install nginx1 -y
 gpasswd -a nginx www
 
-sed -i -r -e 's/^user.*$/user nginx www;/g' /etc/nginx/nginx.conf
-
 cat << 'EOS' >/etc/nginx/conf.d/security.conf
 add_header X-XSS-Protection "1; mode=block";
 add_header X-Frame-Options SAMEORIGIN;
