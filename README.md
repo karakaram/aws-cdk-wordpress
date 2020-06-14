@@ -320,8 +320,8 @@ grep 'temporary password' /var/log/mysqld.log
 mysql -uroot -p
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyNewPass4!';
 CREATE DATABASE wordpress;
-CREATE USER 'wordpress'@'localhost' IDENTIFIED BY 'MyNewPass4!';
-GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost' WITH GRANT OPTION;
+CREATE USER 'wordpress'@'127.0.0.1' IDENTIFIED WITH mysql_native_password BY 'MyNewPass4!';
+GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'127.0.0.1' WITH GRANT OPTION;
 ```
 
 Dump Database
