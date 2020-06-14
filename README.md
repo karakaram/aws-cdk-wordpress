@@ -201,7 +201,7 @@ server {
 EOS
 
 
-amazon-linux-extras install php7.4 -y
+amazon-linux-extras install php7.3 -y
 sed -i -r -e 's/^;?date.timezone =.*$/date.timezone = "UTC"/g' /etc/php.ini
 #sed -i -r -e 's/^;?date.timezone =.*$/date.timezone = "Asia\/Tokyo"/g' /etc/php.ini
 sed -i -r -e 's/^;?expose_php =.*$/expose_php = Off/g' /etc/php.ini
