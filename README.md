@@ -222,6 +222,7 @@ sed -i -r -e 's/^;?pm.min_spare_servers =.*.*$/pm.min_spare_servers = 1/g' /etc/
 sed -i -r -e 's/^;?pm.max_spare_servers =.*.*$/pm.max_spare_servers = 3/g' /etc/php-fpm.d/www.conf
 sed -i -r -e 's/^;?request_slowlog_timeout =.*.*$/request_slowlog_timeout = 10/g' /etc/php-fpm.d/www.conf
 sed -i -r -e 's/^;?request_terminate_timeout =.*.*$/request_terminate_timeout = 120/g' /etc/php-fpm.d/www.conf
+sed -i -r -e 's/^;?catch_workers_output =.*.*$/catch_workers_output = yes/g' /etc/php-fpm.d/www.conf
 
 #sed -i -r -e 's/^;?listen =.*$/listen = 127.0.0.1:9000/g' /etc/php-fpm.d/www.conf
 #sed -i -r -e 's/unix:\/run\/php-fpm\/www.sock;/127.0.0.1:9000/g' /etc/nginx/conf.d/php-fpm.conf
