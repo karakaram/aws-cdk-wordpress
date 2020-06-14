@@ -397,6 +397,12 @@ rm -rf /var/www/wordpress
 grep -q fs-12345678 /etc/fstab || echo 'fs-12345678 /var/www/html efs _netdev,tls,accesspoint=fsap-1234567890xxxxxxx 0 0' >> /etc/fstab
 ```
 
+Unmount EFS File System
+
+```
+umount /var/www/html
+```
+
 Configure log roaates
 
 ```
