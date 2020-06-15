@@ -228,7 +228,7 @@ sed -i -r -e 's/^;?catch_workers_output =.*.*$/catch_workers_output = yes/g' /et
 #sed -i -r -e 's/unix:\/run\/php-fpm\/www.sock;/127.0.0.1:9000/g' /etc/nginx/conf.d/php-fpm.conf
 
 # php7.3
-yum install php-bcmath php-gd php-mbstring php-pecl-imagick php-xml -y
+yum install php-bcmath php-gd php-mysqlnd php-mbstring php-pecl-imagick php-xml -y
 
 yum install mysql -y
 
