@@ -88,6 +88,7 @@ server {
     error_log   /var/log/nginx/error-default.log warn;
 
     location / {
+        access_log off;
         return 200;
     }
 }
