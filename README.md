@@ -122,6 +122,11 @@ server {
         try_files $uri $uri/ /index.php?$args;
     }
 
+    location = /nginx-health {
+        access_log off;
+        return 200 "healthy\n";
+    }
+
     location = /favicon.ico {
         log_not_found off;
         access_log off;
@@ -145,11 +150,6 @@ server {
 
     location ~* \.(jpg|jpeg|gif|png|css|js|swf|ico|pdf|svg|eot|ttf|woff)$ {
         expires 60d;
-        access_log off;
-    }
-
-    location = /health-check.php {
-        log_not_found off;
         access_log off;
     }
 
@@ -217,12 +217,12 @@ sed -i -r -e 's/^;?user =.*$/user = nginx/g' /etc/php-fpm.d/www.conf
 sed -i -r -e 's/^;?group =.*$/group = www/g' /etc/php-fpm.d/www.conf
 sed -i -r -e 's/^;?pm.max_requests =.*$/pm.max_requests = 500/g' /etc/php-fpm.d/www.conf
 sed -i -r -e 's/^;?pm.max_children =.*$/pm.max_children = 10/g' /etc/php-fpm.d/www.conf
-sed -i -r -e 's/^;?pm.start_servers =.*.*$/pm.start_servers = 2/g' /etc/php-fpm.d/www.conf
-sed -i -r -e 's/^;?pm.min_spare_servers =.*.*$/pm.min_spare_servers = 1/g' /etc/php-fpm.d/www.conf
-sed -i -r -e 's/^;?pm.max_spare_servers =.*.*$/pm.max_spare_servers = 3/g' /etc/php-fpm.d/www.conf
-sed -i -r -e 's/^;?request_slowlog_timeout =.*.*$/request_slowlog_timeout = 10/g' /etc/php-fpm.d/www.conf
-sed -i -r -e 's/^;?request_terminate_timeout =.*.*$/request_terminate_timeout = 120/g' /etc/php-fpm.d/www.conf
-sed -i -r -e 's/^;?catch_workers_output =.*.*$/catch_workers_output = yes/g' /etc/php-fpm.d/www.conf
+sed -i -r -e 's/^;?pm.start_servers =.*$/pm.start_servers = 2/g' /etc/php-fpm.d/www.conf
+sed -i -r -e 's/^;?pm.min_spare_servers =.*$/pm.min_spare_servers = 1/g' /etc/php-fpm.d/www.conf
+sed -i -r -e 's/^;?pm.max_spare_servers =.*$/pm.max_spare_servers = 3/g' /etc/php-fpm.d/www.conf
+sed -i -r -e 's/^;?request_slowlog_timeout =.*$/request_slowlog_timeout = 10/g' /etc/php-fpm.d/www.conf
+sed -i -r -e 's/^;?request_terminate_timeout =.*$/request_terminate_timeout = 120/g' /etc/php-fpm.d/www.conf
+sed -i -r -e 's/^;?catch_workers_output =.*$/catch_workers_output = yes/g' /etc/php-fpm.d/www.conf
 
 #sed -i -r -e 's/^;?listen =.*$/listen = 127.0.0.1:9000/g' /etc/php-fpm.d/www.conf
 #sed -i -r -e 's/unix:\/run\/php-fpm\/www.sock;/127.0.0.1:9000/g' /etc/nginx/conf.d/php-fpm.conf
