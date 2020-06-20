@@ -81,6 +81,11 @@ http {
     gzip_comp_level 2;
     gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript application/javascript application/json;
 
+    open_file_cache max=1000 inactive=60s;
+    open_file_cache_valid 60s;
+    open_file_cache_min_uses 1;
+    open_file_cache_errors on;
+
     # Load modular configuration files from the /etc/nginx/conf.d directory.
     # See http://nginx.org/en/docs/ngx_core_module.html#include
     # for more information.
