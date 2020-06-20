@@ -229,7 +229,11 @@ sed -i -r -e 's/^;?catch_workers_output =.*$/catch_workers_output = yes/g' /etc/
 #sed -i -r -e 's/unix:\/run\/php-fpm\/www.sock;/127.0.0.1:9000/g' /etc/nginx/conf.d/php-fpm.conf
 
 # php7.3
-yum install php-bcmath php-gd php-mysqlnd php-mbstring php-pecl-imagick php-xml -y
+yum install php-bcmath php-gd php-mysqlnd php-mbstring php-opcache php-pecl-imagick php-xml -y
+
+opcache.memory_consumption
+sed -i -r -e 's/^;?opcache\.memory_consumption=.*$/opcache.memory_consumption=64/g' /etc/php.d/10-opcache.ini
+sed -i -r -e 's/^;?opcache\.revalidate_freq=.*$/opcache.revalidate_freq=900/g' /etc/php.d/10-opcache.ini
 
 yum install mysql -y
 
@@ -369,6 +373,7 @@ wp plugin install easy-wp-meta-description --activate --path=/var/www/wordpress
 wp plugin install google-sitemap-generator --activate --path=/var/www/wordpress
 wp plugin install health-check --activate --path=/var/www/wordpress
 wp plugin install wp-mail-smtp --activate --path=/var/www/wordpress
+wp plugin install flush-opcache --activate --path=/var/www/wordpress
 chown -R nginx:www /var/www
 find /var/www -type d | xargs chmod -R 775
 find /var/www -type f | xargs chmod -R 664
