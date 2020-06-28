@@ -223,6 +223,7 @@ sed -i -r -e 's/^;?post_max_size =.*$/post_max_size = 16M/g' /etc/php.ini
 sed -i -r -e 's/^;?upload_max_filesize =.*$/upload_max_filesize = 16M/g' /etc/php.ini
 sed -i -r -e 's/^;?pdo_mysql\.default_socket=.*$/pdo_mysql\.default_socket=\/var\/lib\/mysql\/mysql\.sock/g' /etc/php.ini
 sed -i -r -e 's/^;?mysqli\.default_socket =.*$/mysqli\.default_socket = \/var\/lib\/mysql\/mysql\.sock/g' /etc/php.ini
+sed -i -r -e 's/^;?session.cookie_secure =.*$/session.cookie_secure = 1/g' /etc/php.ini
 sed -i -r -e 's/^;?emergency_restart_threshold =.*$/emergency_restart_threshold = 10/g' /etc/php-fpm.conf
 sed -i -r -e 's/^;?emergency_restart_interval =.*$/emergency_restart_interval = 1m/g' /etc/php-fpm.conf
 sed -i -r -e 's/^;?process_control_timeout =.*$/process_control_timeout = 10/g' /etc/php-fpm.conf
