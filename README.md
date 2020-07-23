@@ -276,6 +276,8 @@ yum install mysql-community-server
 
 Configure my.cnf
 
+When you have 200MB of memory available for MySQL
+
 ```
 cat << 'EOS' >>/etc/my.cnf
 
@@ -286,6 +288,14 @@ innodb_buffer_pool_size = 134217728
 innodb_flush_method = O_DIRECT
 EOS
 ```
+
+When you have 1GB of memory available for MySQL
+
+```
+max_connections = 84
+innodb_buffer_pool_size = 805306368
+```
+
 
 Variables (RDS MySQL8 t3.micro default)
 
