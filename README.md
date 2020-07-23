@@ -276,11 +276,6 @@ yum install mysql-community-server
 
 Configure my.cnf
 
-134217728*5/4 = DBInstanceClassMemory
-
-DBInstanceClassMemory=178257920(170MB)
-max_connections
-
 ```
 cat << 'EOS' >>/etc/my.cnf
 
