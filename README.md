@@ -345,10 +345,16 @@ CREATE USER 'wordpress'@'%' IDENTIFIED WITH mysql_native_password BY 'MyNewPass4
 GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'%' WITH GRANT OPTION;
 ```
 
-Dump Database
+Export Database
 
 ```
 mysqldump -umyuser -p --default-character-set=utf8mb4 --host=myhost --single-transaction --set-gtid-purged=OFF wordpress > wordpress.sql
+```
+
+Import Database
+
+```
+mysql -umyuser -p --default-character-set=utf8mb4 --host=myhost wordpress < wordpress.sql
 ```
 
 ## Setup wordpress
