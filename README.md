@@ -489,6 +489,13 @@ wp option update home 'https://example.com' --path=/var/www/html
 wp option update siteurl 'https://example.com' --path=/var/www/html
 ```
 
+## Update wordpress
+
+```
+wp core update
+wp core update-db
+```
+
 ## CloudWatch Agent
 
 1. https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/download-cloudwatch-agent-commandline.html
