@@ -353,7 +353,7 @@ GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'%' WITH GRANT OPTION;
 Export Database
 
 ```
-mysqldump -umyuser -p --default-character-set=utf8mb4 --host=myhost --single-transaction --set-gtid-purged=OFF wordpress > wordpress.sql
+mysqldump -umyuser -p --default-character-set=utf8mb4 --host=myhost --single-transaction --set-gtid-purged=OFF --no-tablespaces wordpress > wordpress.sql
 ```
 
 Import Database
